@@ -49,7 +49,7 @@ this.add(t1);
 */	
   
           l1.addElement(msg_received);  
-          list.setBounds(100,150, 75,75);  
+          list.setBounds(50,50, 200,200);  
           this.add(list);  
           
 this.add(panel1);
