@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.awt.event.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,8 +14,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class server1 extends JFrame{
-	public static DefaultListModel<String> l1 = new DefaultListModel<>();
 	
+	public static DefaultListModel<String> l1 = new DefaultListModel<>();
 	
 	public static void main(String[] args){
 		
@@ -38,11 +41,24 @@ public class server1 extends JFrame{
 		
 		fetchButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-		
-				fetchData();
+				sendTrigger();
+				//fetchData();
 			}
 		});	
 	
+	}
+	
+	public static void sendTrigger(){
+		String s="transmit_data";
+		String mobile_ip="";
+		int mobile_port=8080;
+		try{
+			Socket socket = new Socket(mobile_ip,mobile_port);
+			DataOutputStream DOS = new DataOutputStream(socket.getOutputStream());
+			DOS.writeUTF(s);
+			socket.close();
+			}
+		catch(IOException e){}
 	}
 	
 	public static void fetchData(){
