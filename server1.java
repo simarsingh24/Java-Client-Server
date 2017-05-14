@@ -60,7 +60,7 @@ public class server1 extends JFrame{
 			socket.close();
 			}
 		catch(IOException e){}
-	//	l1.clear();
+		l1.clear();
 	}
 	
 	public static void fetchData(){
@@ -72,6 +72,7 @@ public class server1 extends JFrame{
 			msg_received = DIS.readUTF();
 			clientSocket.close();
 			socket.close();
+		
 		}
 		catch(IOException e){	
 			msg_received=e.toString();
@@ -79,54 +80,22 @@ public class server1 extends JFrame{
 		if(msg_received==null){
 			msg_received="harsimar";
 		}
-		l1.addElement(msg_received);
+		convertToList(msg_received);
+//		l1.addElement(msg_received);
+	
+	}
+	public static void convertToList(String s){
+		String temp="";
+		int i=0;
+		while((i+1)<s.length()){
+			temp+=s.charAt(i);
+			if(s.charAt(i+1)=='*'){
+				l1.addElement(temp);
+				temp="";
+				i++;
+			}
+			i++;
 		}
+	}
 }
 
-
-/*
-public class Server extends JFrame
-{
-public static void main(String[] args)
-{
-new Server();
-}
-
-
-public Server()
-{
-
-String msg_received;
-DefaultListModel<String> l1 = new DefaultListModel<>();
-JList<String> list = new JList<>(l1);  
-JPanel panel1 = new JPanel();
-JLabel label1 = new JLabel("Data Received");
-panel1.add(label1);
-while(true){          
-try{
-ServerSocket socket = new ServerSocket(8080);
-Socket clientSocket = socket.accept();
-DataInputStream DIS = new DataInputStream(clientSocket.getInputStream());
-msg_received = DIS.readUTF();
-clientSocket.close();
-socket.close();}
-catch(IOException e){msg_received=e.toString();}
-
-if(msg_received==null){
-msg_received="harsimar";
-}
-
-  
-          l1.addElement(msg_received);  
-          list.setBounds(50,50, 200,200);  
-          this.add(list);  
-          
-this.add(panel1);
-this.setTitle("Server");
-this.setSize(500,500);
-this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-this.setVisible(true);
-}
-}
-}
-*/
