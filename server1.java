@@ -12,6 +12,7 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.FileWriter;
 
 public class server1 extends JFrame{
 	
@@ -26,6 +27,10 @@ public class server1 extends JFrame{
 		JButton fetchButton =new JButton("Fetch");
 		fetchButton.setBounds(20,10,95,30);
 
+		JButton writeButton =new JButton("Print");
+		writeButton.setBounds(20,260,95,30);
+
+		
 		JList<String> list = new JList<>(l1);  
 		list.setBounds(50,50, 200,200);  
 		
@@ -33,6 +38,7 @@ public class server1 extends JFrame{
 		JLabel label1 = new JLabel("Data Received");
 		panel1.add(label1);
 		
+		frame.add(writeButton);
 		frame.add(list);
 		frame.add(panel1);	
 		frame.add(fetchButton);
@@ -46,6 +52,12 @@ public class server1 extends JFrame{
 				sendTrigger();
 				fetchData();
 				//fetchData();
+			}
+		});
+		
+		writeButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				writeToFile(l1);	
 			}
 		});	
 	
@@ -96,6 +108,17 @@ public class server1 extends JFrame{
 			}
 			i++;
 		}
+	}
+	public static void writeToFile(DefaultListModel<String> l1){
+		try{
+		FileWriter writer =new FileWriter("output.txt");
+        
+		for(int i=0;i<l1.getSize();i++) {
+			writer.write(l1.get(i));
+			writer.write("\n");
+		}
+		writer.close();
+		}catch(IOException e){}
 	}
 }
 
