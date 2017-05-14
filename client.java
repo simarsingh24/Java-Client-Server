@@ -20,7 +20,7 @@ public class client
 public static void main(String[] args)
 {
 try{
-Socket socket = new Socket("127.0.0.1",8080);
+Socket socket = new Socket("192.168.1.51",8080);
 DataOutputStream DOS = new DataOutputStream(socket.getOutputStream());
 DOS.writeUTF("HELLO_WORLD");
 socket.close();

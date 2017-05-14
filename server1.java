@@ -16,6 +16,8 @@ import java.io.InputStream;
 public class server1 extends JFrame{
 	
 	public static DefaultListModel<String> l1 = new DefaultListModel<>();
+	public static final String mobile_ip="192.168.1.159";
+	public static final int mobile_port=8080;
 	
 	public static void main(String[] args){
 		
@@ -42,6 +44,7 @@ public class server1 extends JFrame{
 		fetchButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				sendTrigger();
+				fetchData();
 				//fetchData();
 			}
 		});	
@@ -50,8 +53,6 @@ public class server1 extends JFrame{
 	
 	public static void sendTrigger(){
 		String s="transmit_data";
-		String mobile_ip="";
-		int mobile_port=8080;
 		try{
 			Socket socket = new Socket(mobile_ip,mobile_port);
 			DataOutputStream DOS = new DataOutputStream(socket.getOutputStream());
@@ -59,11 +60,11 @@ public class server1 extends JFrame{
 			socket.close();
 			}
 		catch(IOException e){}
+	//	l1.clear();
 	}
 	
 	public static void fetchData(){
 		String msg_received;
-		
 		try{
 			ServerSocket socket=new ServerSocket(8080);
 			Socket clientSocket=socket.accept();
@@ -79,7 +80,7 @@ public class server1 extends JFrame{
 			msg_received="harsimar";
 		}
 		l1.addElement(msg_received);
-	}
+		}
 }
 
 
