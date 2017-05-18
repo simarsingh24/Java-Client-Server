@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.io.*;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,38 +22,39 @@ public class server2 extends JFrame{
 	public static String mobile_ip="192.168.1.35";
 	public static int mobile_port=8080;
 	
+	public static JFrame frame= new JFrame("Server");
+	
+	public static JLabel connectLabel=new JLabel("(Mobile IP) Click connect : ");
+	public static JTextField mobileIPTextField=new JTextField("192.168.1.35");
+	public static JTextField portTextField=new JTextField("8080");
+	public static JButton connectButton=new JButton("Connect");
+	public static JLabel localIPLabel=new JLabel("Please enter Local IP and Port 8080 in APP ");
+	public static JButton fetchButton =new JButton("Fetch");
+	public static JLabel fetchedResultLabel=new JLabel("Please select the most appropriate item :");
+	public static JList<String> list = new JList<>(l1);  
+	public static JButton writeButton =new JButton("Add To File");
+	public static JButton clearButton =new JButton("Clear File");
+	
 	public static void main(String[] args){
 		
-		JFrame frame= new JFrame("Server");
-		
-		JLabel connectLabel=new JLabel("(Mobile IP) Click connect : ");
 		connectLabel.setBounds(20,20,300,20);
 		
-		JTextField mobileIPTextField=new JTextField("192.168.1.35");
 		mobileIPTextField.setBounds(20,40,100,20);
 		
-		JTextField portTextField=new JTextField("8080");
 		portTextField.setBounds(130,40,50,20);
 		
-		JButton connectButton=new JButton("Connect");
 		connectButton.setBounds(190,40,100,20);
 		
-		JLabel localIPLabel=new JLabel("Please enter Local IP and Port 8080 in APP ");
 		localIPLabel.setBounds(20,70,400,20);
 		
-		JButton fetchButton =new JButton("Fetch");
 		fetchButton.setBounds(20,100,95,30);
 
-		JLabel fetchedResultLabel=new JLabel("Please select the most appropriate item :");
 		fetchedResultLabel.setBounds(20,130,300,20);
 				
-		JList<String> list = new JList<>(l1);  
 		list.setBounds(30,160, 400,200);  
 
-		JButton writeButton =new JButton("Add To File");
 		writeButton.setBounds(325,380,120,30);
 
-		JButton clearButton =new JButton("Clear File");
 		clearButton.setBounds(20,380,100,30);
 		
 	
@@ -150,13 +152,18 @@ public class server2 extends JFrame{
 	}
 	public static void writeToFile(DefaultListModel<String> l1){
 		try{
-		FileWriter writer =new FileWriter("output.txt");
+		//FileWriter writer =new FileWriter("output.txt");
+		Writer output;
+		output = new BufferedWriter(new FileWriter("Cart.txt", true));
         
-		for(int i=0;i<l1.getSize();i++) {
-			writer.write(l1.get(i));
-			writer.write("\n");
-		}
-		writer.close();
+		System.out.println(list.getSelectedValue());
+		
+			//writer.write(l1.get(i));
+			output.append(list.getSelectedValue());
+			output.append("\n");
+			//writer.write("\n");
+		output.close();
+		//writer.close();
 		}catch(IOException e){}
 	}
 }
