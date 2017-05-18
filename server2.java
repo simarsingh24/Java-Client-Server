@@ -101,6 +101,12 @@ public class server2 extends JFrame{
 				writeToFile(l1);	
 			}
 		});	
+		
+		clearButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				clearFileData();
+			}
+		});
 	
 	}
 	
@@ -155,16 +161,23 @@ public class server2 extends JFrame{
 		//FileWriter writer =new FileWriter("output.txt");
 		Writer output;
 		output = new BufferedWriter(new FileWriter("Cart.txt", true));
-        
-		System.out.println(list.getSelectedValue());
-		
-			//writer.write(l1.get(i));
+        	//writer.write(l1.get(i));
 			output.append(list.getSelectedValue());
 			output.append("\n");
 			//writer.write("\n");
 		output.close();
 		//writer.close();
 		}catch(IOException e){}
+	}
+	public static void clearFileData(){
+	
+		try{
+		FileWriter writer = new FileWriter("Cart.txt", false); 
+        PrintWriter printer = new PrintWriter(writer, false);
+        printer.flush();
+        printer.close();
+        writer.close();
+        }catch(IOException e){}
 	}
 }
 
