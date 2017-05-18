@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.net.*;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -17,14 +18,14 @@ import java.io.FileWriter;
 public class server1 extends JFrame{
 	
 	public static DefaultListModel<String> l1 = new DefaultListModel<>();
-	public static final String mobile_ip="192.168.1.35";
-	public static final int mobile_port=8080;
+	public static String mobile_ip="192.168.1.35";
+	public static int mobile_port=8080;
 	
 	public static void main(String[] args){
 		
 		JFrame frame= new JFrame("Server");
 		
-		JLabel connectLabel=new JLabel("Click connect to connect to this IP: ");
+		JLabel connectLabel=new JLabel("(Mobile IP) Click connect : ");
 		connectLabel.setBounds(20,20,300,20);
 		
 		JTextField mobileIPTextField=new JTextField("192.168.1.35");
@@ -36,32 +37,51 @@ public class server1 extends JFrame{
 		JButton connectButton=new JButton("Connect");
 		connectButton.setBounds(190,40,100,20);
 		
+		JLabel localIPLabel=new JLabel("Please enter Local IP and Port 8080 in APP ");
+		localIPLabel.setBounds(20,70,400,20);
+		
 		JButton fetchButton =new JButton("Fetch");
-		fetchButton.setBounds(20,70,95,30);
+		fetchButton.setBounds(20,100,95,30);
 
 		JButton writeButton =new JButton("Print");
-		writeButton.setBounds(20,340,95,30);
+		writeButton.setBounds(20,370,95,30);
 
 		
 		JList<String> list = new JList<>(l1);  
-		list.setBounds(50,120, 200,200);  
+		list.setBounds(50,150, 200,200);  
 		
-		JPanel panel1 = new JPanel();
-		JLabel label1 = new JLabel("Data Received");
-		panel1.add(label1);
-		
+	
 		frame.add(connectButton);
 		frame.add(portTextField);
 		frame.add(connectLabel);
 		frame.add(mobileIPTextField);
-		frame.add(writeButton);
+		/*frame.add(writeButton);
 		frame.add(list);
 		frame.add(panel1);	
 		frame.add(fetchButton);
+		*/
+		
 		frame.setSize(500,500);
 		frame.setLayout(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		connectButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+
+				frame.add(localIPLabel);
+				frame.add(writeButton);
+				frame.add(list);
+				frame.add(fetchButton);
+				SwingUtilities.updateComponentTreeUI(frame);
+				
+				mobile_ip=mobileIPTextField.getText();
+				mobile_port=Integer.parseInt(portTextField.getText());
+				
+				
+			}
+		});
 		
 		fetchButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -91,10 +111,11 @@ public class server1 extends JFrame{
 		l1.clear();
 	}
 	
+	
 	public static void fetchData(){
 		String msg_received;
 		try{
-			ServerSocket socket=new ServerSocket(8080);
+			ServerSocket socket=new ServerSocket(mobile_port);
 			Socket clientSocket=socket.accept();
 			DataInputStream DIS = new DataInputStream(clientSocket.getInputStream());
 			msg_received = DIS.readUTF();
