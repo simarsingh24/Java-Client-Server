@@ -17,27 +17,43 @@ import java.io.FileWriter;
 public class server1 extends JFrame{
 	
 	public static DefaultListModel<String> l1 = new DefaultListModel<>();
-	public static final String mobile_ip="192.168.1.159";
+	public static final String mobile_ip="192.168.1.35";
 	public static final int mobile_port=8080;
 	
 	public static void main(String[] args){
 		
 		JFrame frame= new JFrame("Server");
 		
+		JLabel connectLabel=new JLabel("Click connect to connect to this IP: ");
+		connectLabel.setBounds(20,20,300,20);
+		
+		JTextField mobileIPTextField=new JTextField("192.168.1.35");
+		mobileIPTextField.setBounds(20,40,100,20);
+		
+		JTextField portTextField=new JTextField("8080");
+		portTextField.setBounds(130,40,50,20);
+		
+		JButton connectButton=new JButton("Connect");
+		connectButton.setBounds(190,40,100,20);
+		
 		JButton fetchButton =new JButton("Fetch");
-		fetchButton.setBounds(20,10,95,30);
+		fetchButton.setBounds(20,70,95,30);
 
 		JButton writeButton =new JButton("Print");
-		writeButton.setBounds(20,260,95,30);
+		writeButton.setBounds(20,340,95,30);
 
 		
 		JList<String> list = new JList<>(l1);  
-		list.setBounds(50,50, 200,200);  
+		list.setBounds(50,120, 200,200);  
 		
 		JPanel panel1 = new JPanel();
 		JLabel label1 = new JLabel("Data Received");
 		panel1.add(label1);
 		
+		frame.add(connectButton);
+		frame.add(portTextField);
+		frame.add(connectLabel);
+		frame.add(mobileIPTextField);
 		frame.add(writeButton);
 		frame.add(list);
 		frame.add(panel1);	
