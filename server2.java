@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.FileWriter;
+import java.awt.Desktop;
 
 public class server2 extends JFrame{
 	
@@ -34,30 +35,22 @@ public class server2 extends JFrame{
 	public static JList<String> list = new JList<>(l1);  
 	public static JButton writeButton =new JButton("Add To File");
 	public static JButton clearButton =new JButton("Clear File");
+	public static JButton showFile=new JButton("Show File");
 	
 	public static void main(String[] args){
 		
 		connectLabel.setBounds(20,20,300,20);
-		
-		mobileIPTextField.setBounds(20,40,100,20);
-		
-		portTextField.setBounds(130,40,50,20);
-		
-		connectButton.setBounds(190,40,100,20);
-		
-		localIPLabel.setBounds(20,70,400,20);
-		
+		mobileIPTextField.setBounds(20,40,100,20);		
+		portTextField.setBounds(130,40,50,20);		
+		connectButton.setBounds(190,40,100,20);		
+		localIPLabel.setBounds(20,70,400,20);		
 		fetchButton.setBounds(20,100,95,30);
-
-		fetchedResultLabel.setBounds(20,130,300,20);
-				
+		fetchedResultLabel.setBounds(20,130,300,20);				
 		list.setBounds(30,160, 400,200);  
-
 		writeButton.setBounds(325,380,120,30);
-
 		clearButton.setBounds(20,380,100,30);
+		showFile.setBounds(20,450,120,30);
 		
-	
 		frame.add(connectButton);
 		frame.add(portTextField);
 		frame.add(connectLabel);
@@ -89,6 +82,7 @@ public class server2 extends JFrame{
 				frame.add(clearButton);
 				frame.add(writeButton);
 				frame.add(list);
+				frame.add(showFile);
 				frame.add(fetchedResultLabel);
 				SwingUtilities.updateComponentTreeUI(frame);
 				sendTrigger();
@@ -105,6 +99,12 @@ public class server2 extends JFrame{
 		clearButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				clearFileData();
+			}
+		});
+		
+		showFile.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				openFile();
 			}
 		});
 	
@@ -178,6 +178,18 @@ public class server2 extends JFrame{
         printer.close();
         writer.close();
         }catch(IOException e){}
+	}
+	public static void openFile(){
+		try{
+			File file = new File("Cart.txt");
+	        if(!Desktop.isDesktopSupported()){
+	            System.out.println("Desktop is not supported");
+	            return;
+	        }
+	        Desktop desktop = Desktop.getDesktop();
+	        if(file.exists()) desktop.open(file);
+	        
+		}catch(IOException e){}
 	}
 }
 
